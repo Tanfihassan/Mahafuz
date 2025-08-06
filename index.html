@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monetag Button Ads</title>
+    <script async src="https://a.monetag.com/tag.js"></script>
+    <style>
+        /* Basic styling for body */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+
+        /* Container for the buttons */
+        .button-container {
+            display: flex;
+            justify-content: center;  /* Centers the buttons horizontally */
+            align-items: center;      /* Centers the buttons vertically */
+            gap: 20px;                /* Adds space between the buttons */
+        }
+
+        /* Style for each button */
+        .button {
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            color: white;
+        }
+
+        /* Different colors for each button */
+        .button1 {
+            background-color: #ff6347;  /* Tomato */
+        }
+
+        .button2 {
+            background-color: #32cd32;  /* Lime Green */
+        }
+
+        /* Hover effect for buttons */
+        .button:hover {
+            transform: scale(1.1);
+        }
+
+        /* Ad container style */
+        #ad-container {
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        // Function to load the ad script for a specific zone ID
+        function loadAdScript(zoneId) {
+            const script = document.createElement('script');
+            script.src = '//niphaumeenses.net/vignette.min.js';
+            script.setAttribute('data-zone', zoneId);
+            script.setAttribute('data-sdk', `show_${zoneId}`);
+            document.body.appendChild(script);
+
+            // Wait for the ad script to load and show the ad
+            script.onload = () => {
+                window[`show_${zoneId}`]().then(() => {
+                    alert('You have seen the ad!');
+                }).catch((error) => {
+                    console.error('Ad loading failed:', error);
+                });
+            };
+        }
+
+        // Button click handlers to load ads
+        function onButtonClick(buttonId) {
+            let zoneId = '';
+
+            // Set the appropriate Zone ID based on the button clicked
+            if (buttonId === 'btn1') {
+                zoneId = '8567715';  // Zone ID for button 1
+            } else if (buttonId === 'btn2') {
+                zoneId = '8567716';  // Zone ID for button 2 (replace with correct ID)
+            }
+
+            // Load the ad script for the selected zone ID
+            loadAdScript(zoneId);
+
+            // Optionally, show the ad container if it's hidden
+            document.getElementById('ad-container').style.display = 'block';
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <h1>Click a Button to View an Ad</h1>
+
+        <!-- Container for buttons -->
+        <div class="button-container">
+            <button id="btn1" class="button button1" onclick="onButtonClick('btn1')">Show Ad 1</button>
+            <button id="btn2" class="button button2" onclick="onButtonClick('btn2')">Show Ad 2</button>
+        </div>
+
+        <!-- Ad container -->
+        <div id="ad-container" style="display:none;">
+            <!-- The ad will be inserted here -->
+        </div>
+    </div>
+</body>
+</html>
