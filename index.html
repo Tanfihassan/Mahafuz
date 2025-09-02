@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Auto MoneTag Ads Reward System</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    color: #fff;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding-top: 50px;
+  }
+  .container {
+    text-align: center;
+    background: rgba(0,0,0,0.85);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(255,215,0,0.3);
+    width: 95%;
+    max-width: 450px;
+    border: 2px solid #FFD700;
+    position: relative;
+  }
+  h1 { font-size:26px; color:#FFD700; margin-bottom:15px; text-shadow:0 0 10px rgba(255,215,0,0.7); }
+  .developer {
+    font-size:12px; background-color:#4CAF50; padding:6px 12px; border-radius:8px; margin-bottom:20px;
+    display:inline-block; color:white; font-weight:bold;
+  }
+
+  .stats-container { display: flex; justify-content: space-around; margin-bottom: 20px; }
+  .stat-card {
+    background: rgba(255,215,0,0.1);
+    padding: 15px 20px;
+    border-radius: 15px;
+    width: 45%;
+    box-shadow: 0 5px 15px rgba(255,215,0,0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .stat-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(255,215,0,0.4); }
+  .stat-title { font-size:14px; color:#FFD700; margin-bottom:5px; text-align:center; }
+  .stat-value { font-size:28px; font-weight:bold; color:#fff; text-align:center; }
+
+  .buttons button {
+    width:90%; padding:12px; margin:8px 0; border:none; border-radius:12px;
+    font-size:16px; font-weight:bold; cursor:pointer; transition: all 0.3s;
+  }
+  #watch-ad-btn { background:#FFD700; color:#000; }
+  #withdraw-btn { background:linear-gradient(45deg,#FFD700,#4CAF50); color:#000; }
+  #refer-btn { background:#2196F3; color:#fff; }
+  #support-btn { background:#FF5722; color:#fff; }
+  .buttons button:hover { transform:translateY(-3px) scale(1.03); box-shadow:0 6px 20px rgba(255,215,0,0.4); }
+
+  #ad-popup {
+    position: fixed; top:20%; left:50%; transform:translateX(-50%);
+    background: #FFD700; color:#000; padding:15px 25px; font-weight:bold;
+    border-radius:25px; box-shadow:0 0 20px rgba(255,215,0,0.5);
+    opacity:0; transition: all 0.8s ease;
+    z-index:999;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Auto MoneTag Ads</h1>
+  <div class="developer">Developer by Pulse Book</div>
+
+  <div class="stats-container">
+    <div class="stat-card">
+      <div class="stat-title">Watch Ads</div>
+      <div class="stat-value" id="watched-ads">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-title">Earned Coins</div>
+      <div class="stat-value" id="earned-points">0.00</div>
+    </div>
+  </div>
+
+  <div class="buttons">
+    <button id="watch-ad-btn" onclick="watchAd()">Watch Ad</button>
+    <button id="withdraw-btn" onclick="openWithdraw()">Withdrawal Request</button>
+    <button id="refer-btn" onclick="referEarn()">Refer & Earn</button>
+    <button id="support-btn" onclick="openSupport()">Help / Support</button>
+  </div>
+</div>
+
+<div id="ad-popup">+0.50 Coins Added!</div>
+
+<script>
+let watchedAdsCount = parseInt(localStorage.getItem('watchedAdsCount')) || 0;
+let earnedPoints = parseFloat(localStorage.getItem('earnedPoints')) || 0;
+let adWatching = false;
+const AD_DURATION = 15;
+
+function updateStats() {
+  document.getElementById('watched-ads').textContent = watchedAdsCount;
+  document.getElementById('earned-points').textContent = earnedPoints.toFixed(2);
+  localStorage.setItem('watchedAdsCount', watchedAdsCount);
+  localStorage.setItem('earnedPoints', earnedPoints.toFixed(2));
+}
+
+function showPopup() {
+  const popup = document.getElementById('ad-popup');
+  popup.style.opacity = 1;
+  setTimeout(() => { popup.style.opacity = 0; }, 2000);
+}
+
+function watchAd() {
+  if(adWatching) { alert("⚠️ Please wait for current Ad to finish!"); return; }
+  adWatching = true;
+  alert("🟡 Ad Started! Please wait 15 seconds...");
+  setTimeout(() => {
+    watchedAdsCount++;
+    earnedPoints += 0.50;
+    updateStats();
+    showPopup();
+    adWatching = false;
+  }, AD_DURATION * 1000);
+}
+
+function openWithdraw() {
+  window.open("withdraw.html", "_blank");
+}
+
+function referEarn() {
+  alert("Share your referral code: REF12345");
+}
+
+function openSupport() {
+  window.open("https://t.me/yourTelegramID", "_blank");
+}
+
+updateStats();
+</script>
+</body>
+</html>
